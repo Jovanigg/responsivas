@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Responsiva con Firma Electrónica</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        p {
+            text-align: justify;
+        }
+        .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: white;
+            width: 50%;
+            margin: 80px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        #sendMail {
+        display: none;
+        margin: 0 auto; /* Esto centra horizontalmente el elemento */
+    }
+    </style>
+</head>
+<body id="contenido_a_capturar">
+<div style="width: 770px; border: 15px solid transparent;">
+    <div style="clear:both;">
+        <p style="margin-top:0pt; margin-left:10.05pt; margin-bottom:0pt; text-indent:10.95pt; line-height:normal;"><span style="height:0pt; display:block; position:absolute; z-index:-7;"><img src="data:image/png;base64,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" width="149" height="91" style="margin: 0 0 0 auto; display: block; "></span></p>
+        <div style="text-align: right;">
+            <span><br><br>Ciudad de México a <b>{{ day }}</b> de <b>{{ month|upper }}</b> de <b>{{ year }}</b></span>
+        </div>               
+    </div>
+    <div>
+    <h1 style="margin-top:12pt; margin-bottom:0pt; page-break-inside:avoid; page-break-after:avoid; line-height:108%; font-size:17pt;"><a name="_heading_h.gjdgxs"></a><span style="font-weight:normal;">&nbsp;</span></h1>
+    <h1 style="margin-top:12pt; margin-bottom:0pt; page-break-inside:avoid; page-break-after:avoid; line-height:108%; font-size:17pt;"><span style="font-weight:normal;">MI NAVE BY BTLC LATAM</span></h1>
+    <p style="margin-top:0pt; margin-bottom:0pt;">&nbsp;</p>
+    <p style="margin-top:0pt; margin-bottom:0pt;">Asunto: <u>Carta de entrega de <b>
+        {% if tipodos == "computo" %}
+            Equipo de cómputo
+        {% elif tipodos == "auricular" %}
+            Auricular
+        {% elif tipodos == "dispositivo_movil" %}
+            Dispositivo móvil
+        {% elif tipodos == "tablet" %}
+            Tablet
+        {% elif tipodos == "tv" %}
+            TV
+        {% elif tipodos == "otros" %}
+            Otros
+        {% endif %}
+        </b></u></p>
+    <p style="margin-top:15.75pt; margin-bottom:14pt; line-height:normal; font-size:13pt;"><span style="font-size:11pt;">Sirva &eacute;ste como comprobante de entrega de <b>
+        {% if tipodos == "computo" %}
+            Equipo de cómputo
+        {% elif tipodos == "auricular" %}
+            Auricular
+        {% elif tipodos == "dispositivo_movil" %}
+            Dispositivo móvil
+        {% elif tipodos == "tablet" %}
+            Tablet
+        {% elif tipodos == "tv" %}
+            TV
+        {% elif tipodos == "otros" %}
+            Otros
+        {% endif %}
+        </b></span><span style="font-family:'Quattrocento Sans';">:</span></p>
+    {% if dispositivo %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">Dispositivo: &nbsp; <b>{{ dispositivo|upper }}</b></p>
+    {% endif %}
+    {% if marca %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">Marca: &nbsp; <b>{{ marca|upper }}</b></p>
+    {% endif %}
+    {% if modelo %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">Modelo: &nbsp; <b>{{ modelo|upper }}</b></p>
+    {% endif %}
+    {% if serie %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">Serie: &nbsp; <b>{{ serie|upper }}</b></p>
+    {% endif %}
+    {% if procesador %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">Procesador: &nbsp; <b>{{ procesador|upper }}</b></p>
+    {% endif %}
+    {% if ram %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">RAM: &nbsp; <b>{{ ram|upper }} GB</b></p>
+    {% endif %}
+    {% if rom %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">ROM: &nbsp; <b>{{ rom|upper }} GB</b></p>
+    {% endif %}
+    {% if so %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">SO: &nbsp; <b>{{ so|upper }}</b></p>
+    {% endif %}
+    {% if cargador %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">Cargador: &nbsp; <b>{{ cargador|upper }}</b></p>
+    {% endif %}
+    {% if bateria %}
+    <p style="margin-top:0pt; margin-bottom:0pt; line-height:115%;">Bater&iacute;a: &nbsp; <b>{{ bateria|upper }}</b></p>
+    {% endif %}
+        <br>
+    <p>Al momento de revisar el equipo especificado, se llevaron a cabo pruebas exhaustivas para evaluar su estado físico y funcionalidad. Durante este proceso, se identificaron algunas observaciones técnicas que se detallan a continuación.</p>
+    <p>Se desea enfatizar que, aunque estas observaciones fueron notadas, el equipo generalmente muestra un buen estado de funcionamiento y una apariencia física adecuada.</p>
+    <p>El equipo está listo para ser recibido y utilizado, y se tomarán las medidas necesarias para abordar las observaciones técnicas mencionadas según sea necesario.</p>
+    <p><b>Observaciones técnicas:</b></p>
+    {% if observaciones %}
+    <p>{{ observaciones }}</p>
+    {% else %}
+        <p>&nbsp;&nbsp;&nbsp;Ninguna</p>
+    {% endif %}
+    <br><div style="text-align: center;">
+        <h5>Atentamente:</h5>
+        <table cellspacing="0" cellpadding="0" style="width: 438pt; margin: 0 auto; border: 0.75pt solid #bfbfbf; border-collapse: collapse;">
+            <tbody>
+                <tr>
+                    <td style="width: 208.95pt; border-right: 0.75pt solid #bfbfbf; border-bottom: 0.75pt solid #bfbfbf; padding-right: 5.03pt; padding-left: 5.03pt; vertical-align: top;">
+                        <p style="margin-top: 0pt; margin-bottom: 0pt; text-align: center; widows: 0; orphans: 0; font-size: 10pt;"><span style="font-family: Roboto;">ENTREGA</span></p>
+                    </td>
+                    <td style="width: 206.7pt; border-left: 0.75pt solid #bfbfbf; border-bottom: 0.75pt solid #bfbfbf; padding-right: 5.03pt; padding-left: 5.03pt; vertical-align: top;">
+                        <p style="margin-top: 0pt; margin-bottom: 0pt; text-align: center; widows: 0; orphans: 0; font-size: 10pt;"><span style="font-family: Roboto;">RECIBE </span></p>
+                    </td>
+                </tr>
+                <tr style="height: 48pt;">
+                    <td style="width: 206.7pt; border-top: 0.75pt solid #bfbfbf; border-left: 0.75pt solid #bfbfbf; border-bottom: 0.75pt solid #bfbfbf; padding-right: 5.03pt; padding-left: 5.03pt; vertical-align: top; text-align: center; position: relative;">
+                        <div id="tdFirma" style="display: flex; justify-content: center; align-items: center;">
+                        </div>
+                    </td>
+                                        
+                    <td style="width: 206.7pt; border-top: 0.75pt solid #bfbfbf; border-left: 0.75pt solid #bfbfbf; border-bottom: 0.75pt solid #bfbfbf; padding-right: 5.03pt; padding-left: 5.03pt; vertical-align: top;">
+                        <p style="margin-top: 0pt; margin-bottom: 0pt; text-align: center; widows: 0; orphans: 0; font-size: 10pt;"><span style="font-family: Roboto;">&nbsp;</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 208.95pt; border-right: 0.75pt solid #bfbfbf; border-bottom: 0.75pt solid #bfbfbf; padding-right: 5.03pt; padding-left: 5.03pt; vertical-align: top;">
+                        <p style="margin-top: 0pt; margin-bottom: 0pt; text-align: center; widows: 0; orphans: 0; font-size: 10pt;"><span style="font-family: Roboto;"><b>{{ apellido_paterno|upper }}</b> <b>{{ apellido_materno|upper }}</b> <b>{{ nombre|upper }} <br>{{ mail }}</b></span></p>
+                    </td>
+                    <td style="width: 206.7pt; border-left: 0.75pt solid #bfbfbf; border-bottom: 0.75pt solid #bfbfbf; padding-right: 5.03pt; padding-left: 5.03pt; vertical-align: top;">
+                        <p style="margin-top: 0pt; margin-bottom: 0pt; text-align: center; widows: 0; orphans: 0; font-size: 10pt;"><span style="font-family: Roboto;">CLAUDIA MARIN DIAS<br>MI NAVE BY BTLC LATAM</span></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+            <button id="abrirModal" class="btn btn-dark">Firmar documento</button>
+            <button id="sendMail" class="btn btn-success">Enviar correo</button>
+    </div>
+    <div style="clear:both;">
+        <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal;">&nbsp;</p>
+    </div>
+    </div>
+</div>
+<div id="miModal" class="modal">
+    <div class="modal-content">
+        <h2>Firma aquí</h2>
+        <canvas id="canvas" width="400" height="200"></canvas>
+        <br>
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button id="limpiarFirma" class="btn btn-warning">Limpiar Firma</button>
+            <button id="firmar" class="btn btn-success">Firmar</button>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script>
+    var modal = document.getElementById("miModal");
+    var btnAbrirModal = document.getElementById("abrirModal");
+    var btnLimpiarFirma = document.getElementById("limpiarFirma");
+    var btnFirmar = document.getElementById("firmar");
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var isDrawing = false;
+    var lastX = 0;
+    var lastY = 0;
+    
+
+    btnAbrirModal.onclick = function() {
+        modal.style.display = "block";
+        limpiarCanvas();
+    }
+
+    btnLimpiarFirma.onclick = function() {
+        limpiarCanvas();
+    }
+
+    btnFirmar.onclick = function() {
+        modal.style.display = "none";
+        plasmarFirma();
+    }
+
+    ////////////////////////////////////////////////////
+    sendMail.onclick = function() {
+        sendMail.style.display = "none";
+
+        var capturePromise = new Promise(function(resolve, reject) {
+            html2canvas(document.body, {
+                onrendered: function(canvas) {
+                    resolve(canvas);
+                }
+            });
+        });
+
+        capturePromise.then(function(canvas) {
+            var imageData = canvas.toDataURL('image/png');
+
+            localStorage.setItem('capturedImage', imageData);
+
+            alert('La imagen ha sido guardada en el almacenamiento local del navegador.');
+        });
+    };
+    /////////////////////////////////////////////////////
+    function limpiarCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function plasmarFirma() {
+    var firma = canvas.toDataURL(); 
+    var img = new Image();
+    img.src = firma;
+    img.style.maxWidth = "100%";
+    img.style.maxHeight = "100px";
+    img.style.display = "block"; 
+    document.getElementById("tdFirma").style.textAlign = "center"; 
+    document.getElementById("tdFirma").appendChild(img);
+    document.getElementById("abrirModal").style.display = "none";
+    sendMail.style.display = "block";
+    canvas.style.display = "none";
+}
+
+    canvas.addEventListener("mousedown", function(e) {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+    canvas.addEventListener("mousemove", function(e) {
+        if (isDrawing) {
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        }
+    });
+    canvas.addEventListener("mouseup", function() {
+        isDrawing = false;
+    });
+</script>
+</body>
+</html>
