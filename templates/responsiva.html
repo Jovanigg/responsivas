@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Responsiva</title>
+    <title>Formulario Entrega</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f0f0f0;
+        }
+        .thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .thumbnail {
+            max-width: 150px;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
         }
     </style>
 </head>
@@ -16,9 +28,9 @@
     <div class="container mt-5">
         <h1 class="mb-4">Formulario Responsiva</h1>
         
-        <form action="/responsiva" method="post">
-            <div class="col-md-12 mb-3">
-                <b><label for="tipodos" class="form-label">Seleccionar tipo de responsiva:</label></b>
+        <form action="/responsiva" method="post" enctype="multipart/form-data">
+            <div class="col-xs-12 mb-3">
+                <b><label for="tipodos" class="form-label">Seleccionar tipo de entrega:</label></b>
                 <select id="tipodos" name="tipodos" class="form-select" onchange="mostrarCampos()">
                     <option value="">Seleccionar...</option>
                     <option value="computo">Equipo de cómputo</option>
@@ -29,370 +41,146 @@
                     <option value="otros">Otros</option>
                 </select>
             </div>
-            
-            <div id="camposComputo" style="display: none;">
+            <div id="campos" style="display: none;">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="nombreComputo" class="form-label">Nombre:</label></b>
-                        <input type="text" name="nombreComputo" class="form-control">
+                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3"  id="dispositivo" >
+                        <b><label for="dispositivo" class="form-label">Dispositivo:</label></b>
+                        <input type="text" name="dispositivo" class="form-control"style="display: block;">
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_maternoComputo" class="form-label">Apellido materno:</label></b>
-                        <input type="text" name="apellido_maternoComputo" class="form-control">
+                        <b><label for="nombre" class="form-label">Nombre:</label></b>
+                        <input type="text" name="nombre" class="form-control">
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_paternoComputo" class="form-label">Apellido paterno:</label></b>
-                        <input type="text" name="apellido_paternoComputo" class="form-control">
+                        <b><label for="apellido_paterno" class="form-label">Apellido paterno:</label></b>
+                        <input type="text" name="apellido_paterno" class="form-control">
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="mailComputo" class="form-label">Correo:</label></b>
-                        <input type="text" name="mailComputo" class="form-control">
+                        <b><label for="apellido_materno" class="form-label">Apellido materno:</label></b>
+                        <input type="text" name="apellido_materno" class="form-control">
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="tipoComputo" class="form-label">Tipo:</label></b>
-                        <select id="tipoComputo" name="tipoComputo" class="form-select">
+                        <b><label for="mail" class="form-label">Correo:</label></b>
+                        <input type="text" name="mail" class="form-control">
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3" id="tipoo">
+                        <b><label for="tipo" class="form-label">Tipo:</label></b>
+                        <select id="tipo" name="tipo" class="form-select">
                             <option value="">Seleccionar...</option>
                             <option value="nuevo">Nuevo</option>
                             <option value="reasignado">Reasignado</option>
                         </select>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="marcaComputo" class="form-label">Marca:</label></b>
-                        <input type="text" name="marcaComputo" class="form-control">
+                        <b><label for="marca" class="form-label">Marca:</label></b>
+                        <input type="text" name="marca" class="form-control">
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="modeloComputo" class="form-label">Modelo:</label></b>
-                        <input type="text" name="modeloComputo" class="form-control">
+                        <b><label for="modelo" class="form-label">Modelo:</label></b>
+                        <input type="text" name="modelo" class="form-control">
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="serieComputo" class="form-label">Serie:</label></b>
-                        <input type="text" name="serieComputo" class="form-control">
+                        <b><label for="serie" class="form-label">Serie:</label></b>
+                        <input type="text" name="serie" class="form-control">
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="procesadorComputo" class="form-label">Procesador:</label></b>
-                        <input type="text" name="procesadorComputo" class="form-control">
+                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3" id="procesador">
+                        <b><label for="procesador" class="form-label">Procesador:</label></b>
+                        <input type="text" name="procesador" class="form-control">
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="ramComputo" class="form-label">RAM:</label></b>
+                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3" id="ram">
+                        <b><label for="ram" class="form-label">RAM:</label></b>
                         <div style="display: flex;">
-                            <input type="number" name="ramComputo" class="form-control" min="0">
+                            <input type="number" name="ram" class="form-control" min="0">
                             <span class="input-group-text">GB</span>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="romComputo" class="form-label">ROM:</label></b>
+                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3" id="rom">
+                        <b><label for="rom" class="form-label">ROM:</label></b>
                         <div style="display: flex;">
-                            <input type="number" name="romComputo" class="form-control" min="0">
+                            <input type="number" name="rom" class="form-control" min="0">
                             <span class="input-group-text">GB</span>
                         </div>
                     </div>
-                </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3" id="so">
+                        <b><label for="so" class="form-label">SO:</label></b>
+                        <input type="text" name="so" class="form-control">
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
+                        <b><label for="noinventario" class="form-label">No. Inventario:</label></b>
+                        <input type="text" name="noinventario" class="form-control">
+                    </div>
             </div>
-            
-            <div id="camposAuricular" style="display: none;">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="nombreAuricular" class="form-label">Nombre:</label></b>
-                        <input type="text" name="nombreAuricular" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_maternoAuricular" class="form-label">Apellido materno:</label></b>
-                        <input type="text" name="apellido_maternoAuricular" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_paternoAuricular" class="form-label">Apellido paterno:</label></b>
-                        <input type="text" name="apellido_paternoAuricular" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="mailAuricular" class="form-label">Correo:</label></b>
-                        <input type="text" name="mailAuricular" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="tipoAuricular" class="form-label">Tipo:</label></b>
-                        <select id="tipoAuricular" name="tipoAuricular" class="form-select">
-                            <option value="">Seleccionar...</option>
-                            <option value="nuevo">Nuevo</option>
-                            <option value="reasignado">Reasignado</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="marcaAuricular" class="form-label">Marca:</label></b>
-                        <input type="text" name="marcaAuricular" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="modeloAuricular" class="form-label">Modelo:</label></b>
-                        <input type="text" name="modeloAuricular" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="serieAuricular" class="form-label">Serie:</label></b>
-                        <input type="text" name="serieAuricular" class="form-control">
-                    </div>
-                </div>
-            </div>
-            
-            <div id="camposDispositivoMovil" style="display: none;">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="nombreDispositivoMovil" class="form-label">Nombre:</label></b>
-                        <input type="text" name="nombreDispositivoMovil" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_maternoDispositivoMovil" class="form-label">Apellido materno:</label></b>
-                        <input type="text" name="apellido_maternoDispositivoMovil" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_paternoDispositivoMovil" class="form-label">Apellido paterno:</label></b>
-                        <input type="text" name="apellido_paternoDispositivoMovil" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="mailDispositivoMovil" class="form-label">Correo:</label></b>
-                        <input type="text" name="mailDispositivoMovil" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="tipoDispositivoMovil" class="form-label">Tipo:</label></b>
-                        <select id="tipoDispositivoMovil" name="tipoDispositivoMovil" class="form-select">
-                            <option value="">Seleccionar...</option>
-                            <option value="nuevo">Nuevo</option>
-                            <option value="reasignado">Reasignado</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="marcaDispositivoMovil" class="form-label">Marca:</label></b>
-                        <input type="text" name="marcaDispositivoMovil" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="modeloDispositivoMovil" class="form-label">Modelo:</label></b>
-                        <input type="text" name="modeloDispositivoMovil" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="serieDispositivoMovil" class="form-label">Serie:</label></b>
-                        <input type="text" name="serieDispositivoMovil" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="procesadorDispositivoMovil" class="form-label">Procesador:</label></b>
-                        <input type="text" name="procesadorDispositivoMovil" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="ramDispositivoMovil" class="form-label">RAM:</label></b>
-                        <div style="display: flex;">
-                            <input type="number" name="ramDispositivoMovil" class="form-control" min="0">
-                            <span class="input-group-text">GB</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="romDispositivoMovil" class="form-label">ROM:</label></b>
-                        <div style="display: flex;">
-                            <input type="number" name="romDispositivoMovil" class="form-control" min="0">
-                            <span class="input-group-text">GB</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="soDispositivoMovil" class="form-label">SO:</label></b>
-                        <input type="text" name="soDispositivoMovil" class="form-control">
-                    </div>
-                </div>
-            </div>
-            
-            <div id="camposTablet" style="display: none;">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="nombreTablet" class="form-label">Nombre:</label></b>
-                        <input type="text" name="nombreTablet" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_maternoTablet" class="form-label">Apellido materno:</label></b>
-                        <input type="text" name="apellido_maternoTablet" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_paternoTablet" class="form-label">Apellido paterno:</label></b>
-                        <input type="text" name="apellido_paternoTablet" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="mailTablet" class="form-label">Correo:</label></b>
-                        <input type="text" name="mailTablet" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="tipoTablet" class="form-label">Tipo:</label></b>
-                        <select id="tipoTablet" name="tipoTablet" class="form-select">
-                            <option value="">Seleccionar...</option>
-                            <option value="nuevo">Nuevo</option>
-                            <option value="reasignado">Reasignado</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="marcaTablet" class="form-label">Marca:</label></b>
-                        <input type="text" name="marcaTablet" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="modeloTablet" class="form-label">Modelo:</label></b>
-                        <input type="text" name="modeloTablet" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="serieTablet" class="form-label">Serie:</label></b>
-                        <input type="text" name="serieTablet" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="procesadorTablet" class="form-label">Procesador:</label></b>
-                        <input type="text" name="procesadorTablet" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="ramTablet" class="form-label">RAM:</label></b>
-                        <div style="display: flex;">
-                            <input type="number" name="ramTablet" class="form-control" min="0">
-                            <span class="input-group-text">GB</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="romTablet" class="form-label">ROM:</label></b>
-                        <div style="display: flex;">
-                            <input type="number" name="romTablet" class="form-control" min="0">
-                            <span class="input-group-text">GB</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="soTablet" class="form-label">SO:</label></b>
-                        <input type="text" name="soTablet" class="form-control">
-                    </div>
-                </div>
-            </div>
-            
-            <div id="camposTv" style="display: none;">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="nombreTv" class="form-label">Nombre:</label></b>
-                        <input type="text" name="nombreTv" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_maternoTv" class="form-label">Apellido materno:</label></b>
-                        <input type="text" name="apellido_maternoTv" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_paternoTv" class="form-label">Apellido paterno:</label></b>
-                        <input type="text" name="apellido_paternoTv" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="mailTv" class="form-label">Correo:</label></b>
-                        <input type="text" name="mailTv" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="tipoTv" class="form-label">Tipo:</label></b>
-                        <select id="tipoTv" name="tipoTv" class="form-select">
-                            <option value="">Seleccionar...</option>
-                            <option value="nuevo">Nuevo</option>
-                            <option value="reasignado">Reasignado</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="marcaTv" class="form-label">Marca:</label></b>
-                        <input type="text" name="marcaTv" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="modeloTv" class="form-label">Modelo:</label></b>
-                        <input type="text" name="modeloTv" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="serieTv" class="form-label">Serie:</label></b>
-                        <input type="text" name="serieTv" class="form-control">
-                    </div>
-                </div>
-            </div>
-            
-            <div id="camposOtros" style="display: none;">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="nombreOtros" class="form-label">Nombre:</label></b>
-                        <input type="text" name="nombreOtros" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_maternoOtros" class="form-label">Apellido materno:</label></b>
-                        <input type="text" name="apellido_maternoOtros" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="apellido_paternoOtros" class="form-label">Apellido paterno:</label></b>
-                        <input type="text" name="apellido_paternoOtros" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="mailOtros" class="form-label">Correo:</label></b>
-                        <input type="text" name="mailOtros" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="tipoOtros" class="form-label">Tipo:</label></b>
-                        <select id="tipoOtros" name="tipoOtros" class="form-select">
-                            <option value="">Seleccionar...</option>
-                            <option value="nuevo">Nuevo</option>
-                            <option value="reasignado">Reasignado</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="dispositivoOtros" class="form-label">Dispositivo:</label></b>
-                        <input type="text" name="dispositivoOtros" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="marcaOtros" class="form-label">Marca:</label></b>
-                        <input type="text" name="marcaOtros" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="modeloOtros" class="form-label">Modelo:</label></b>
-                        <input type="text" name="modeloOtros" class="form-control">
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 mb-3">
-                        <b><label for="serieOtros" class="form-label">Serie:</label></b>
-                        <input type="text" name="serieOtros" class="form-control">
-                    </div>
-                </div>
-            </div>
-            
-
             <div class="text-center">
                 <input type="submit" value="Enviar" class="btn btn-primary">
             </div>
         </form>
     </div>
-
     <script>
         function mostrarCampos() {
-            var tipo = document.getElementById("tipodos").value;
-            var camposComputo = document.getElementById("camposComputo");
-            var camposAuricular = document.getElementById("camposAuricular");
-            var camposDispositivoMovil = document.getElementById("camposDispositivoMovil");
-            var camposTablet = document.getElementById("camposTablet");
-            var camposTv = document.getElementById("camposTv");
-            var camposOtros = document.getElementById("camposOtros");
+            var select = document.getElementById("tipodos");
+            var selectedOption = select.options[select.selectedIndex].value;
+            var camposDiv = document.getElementById("campos");
+            var dispositivo = document.getElementById("dispositivo");
+            var procesador = document.getElementById("procesador");
+            var ram = document.getElementById("ram");
+            var tipoo = document.getElementById("tipoo");
+            var rom = document.getElementById("rom");
+            var so = document.getElementById("so");
 
-            if (tipo === "computo") {
-                camposComputo.style.display = "block";
+
+            if (selectedOption === "computo") {
+                camposDiv.style.display = "block";
+                dispositivo.style.display = "none";
+                procesador.style.display = "block";
+                ram.style.display = "block";
+                tipoo.style.display = "block";
+                rom.style.display = "block";
+                so.style.display = "block";
+            } else if (selectedOption === "auricular") {
+                camposDiv.style.display = "block";
+                dispositivo.style.display = "none";
+                procesador.style.display = "none";
+                ram.style.display = "none";
+                tipoo.style.display = "block";
+                rom.style.display = "none";
+                so.style.display = "none";
+            } else if (selectedOption === "dispositivo_movil") {
+                camposDiv.style.display = "block";
+                dispositivo.style.display = "none";
+                procesador.style.display = "block";
+                ram.style.display = "block";
+                tipoo.style.display = "block";
+                rom.style.display = "block";
+                so.style.display = "block";
+            } else if (selectedOption === "tablet") {
+                camposDiv.style.display = "block";
+                dispositivo.style.display = "none";
+                procesador.style.display = "block";
+                ram.style.display = "block";
+                tipoo.style.display = "block";
+                rom.style.display = "block";
+                so.style.display = "block";
+            } else if (selectedOption === "tv") {
+                camposDiv.style.display = "block";
+                dispositivo.style.display = "none";
+                procesador.style.display = "none";
+                ram.style.display = "none";
+                tipoo.style.display = "block";
+                rom.style.display = "none";
+                so.style.display = "none";
+            } else if (selectedOption === "otros") {
+                camposDiv.style.display = "block";
+                dispositivo.style.display = "block";
+                procesador.style.display = "none";
+                ram.style.display = "none";
+                tipoo.style.display = "block";
+                rom.style.display = "none";
+                so.style.display = "none";
             } else {
-                camposComputo.style.display = "none";
-            }
-            if (tipo === "auricular") {
-                camposAuricular.style.display = "block";
-            } else {
-                camposAuricular.style.display = "none";
-            }
-            if (tipo === "dispositivo_movil") {
-                camposDispositivoMovil.style.display = "block";
-            } else {
-                camposDispositivoMovil.style.display = "none";
-            }
-            if (tipo === "tablet") {
-                camposTablet.style.display = "block";
-            } else {
-                camposTablet.style.display = "none";
-            }
-            if (tipo === "tv") {
-                camposTv.style.display = "block";
-            } else {
-                camposTv.style.display = "none";
-            }
-            if (tipo === "otros") {
-                camposOtros.style.display = "block";
-            } else {
-                camposOtros.style.display = "none";
+                camposDiv.style.display = "none"; 
             }
         }
     </script>
-
-    <!-- Bootstrap JavaScript dependencies (Popper.js and Bootstrap JS) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
